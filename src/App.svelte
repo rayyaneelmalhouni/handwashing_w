@@ -1,26 +1,39 @@
 <script>
 	import Timmer from './components/Timmer.svelte';
-	import HT from './components/HT.svelte'
+	import HT from './components/HT.svelte';
+	const time = 20;
+	let audio;
+	let time_last = time;
+	let finish = true;
+	function start_timer() {
+		time_last = time;
+		finish = false;
+		let interval = setInterval(() => {
+			time_last -= 1;
+			if (time_last === 0) {
+				clearInterval(interval);
+				audio.play();
+				finish = true;
+			}
+			
+		}, 1000);
+	}
 </script>
 
 <main>
 	<div class="container">
 		<h1>Handwashing</h1>
-		<h3>Time last: 	20</h3>
-		<Timmer />
+		<h3>Time last: 	{time_last}</h3>
+		<audio src="sound.wav" bind:this={audio}></audio>
+		<Timmer on:end={start_timer} {finish} {time_last} {time}/>
 		<HT />	
 	</div>
 	
 </main>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-     * {
-		 margin: 0;
-		 padding: 0;
-		 box-sizing: border-box;
-		 font-family: 'Poppins', sans-serif;
-	 }
+	
+     
 	.container {
 
 	   width: 50%;

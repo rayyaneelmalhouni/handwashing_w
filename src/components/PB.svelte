@@ -1,6 +1,12 @@
+<script>
+    export let time_last = 20;
+    export let time = 20;
+    $: width = (time-time_last) * (100 / time);
+</script>
+
 <main>
   <div  class="container">
-        <span class="progress-i"></span>
+        <span class="progress-i" style="width: {width}%;"></span>
   </div>
 </main>
 <style>
@@ -19,7 +25,6 @@
         bottom: 0;
         height: 100%;
         background-color: green;
-        width: 20%;
         border: none;
     }
 </style>
